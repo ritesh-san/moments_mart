@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/",(req,res)=>{
     res.send("<h3>welcome to my express server</h3>");
 }) 
-app.use("/customer",router);
+app.use("/mart",router);
+// app.use("/product",router);
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
 } ); 
