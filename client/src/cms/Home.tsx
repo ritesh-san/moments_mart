@@ -4,7 +4,7 @@ const Home=()=>{
     return(
         <>
             <section className="hero">
-                <img src="images/banner1.jpg" alt="Festive Banner" />
+                <img src="/images/f5-02.jpg" alt="Festive Banner" />
                 <div className="hero-text">
                 <h2>Back to School Festive Picks</h2>
                 <p>Celebrate with unique gifts and handcrafted style</p>
