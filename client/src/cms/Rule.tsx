@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import Registration from "../customer/Registration";
 import Login from "../customer/Login";
 import Dashboard from "../customer/Dashboard";
+import Productupload from "../Catalog/Productupload";
+import Product from "../Catalog/Product";
 
 const Rule=()=>{
     return(
@@ -18,6 +20,9 @@ const Rule=()=>{
                     <Route path="/login" element={<Login/>} />
                     <Route path="/account" element={<Dashboard/>}>
                      
+                    </Route>
+                    <Route path="/product" element={<Product/>}>
+                        <Route path="upload" element={<Productupload/>} />
                     </Route>
                 </Routes>
                 <Footer/>

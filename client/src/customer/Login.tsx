@@ -25,7 +25,7 @@ const Login=()=>{
 
     const login=(e)=>{
         e.preventDefault(); 
-        axios.post('http://localhost:4000/customer/login',login_info)
+        axios.post('http://localhost:4000/mart/login',login_info)
         .then((res)=>{
             console.log(res)
             if(res?.data.success) {
@@ -43,7 +43,7 @@ const Login=()=>{
         <>
                 <div className="registration-container">
                     <div className="register-box">
-                    <h2>🌸 Login Account</h2>
+                    <h2> LOGIN ACCOUNT</h2>
                     <form action="#" onSubmit={login} method="POST">
 
                         <div className="input-group">

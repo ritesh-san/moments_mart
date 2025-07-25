@@ -5,15 +5,17 @@ const Header=()=>{
         <>
              <header className="site-header">
                 <div className="container header-top">
-                <h1 className="logo">Moments<span>Mart</span></h1>
+                <a href="/" className="log-cls"><h1 className="logo">Moments<span>Mart</span></h1></a>
                 <div className="search-box">
                     <input type="text" placeholder="Search for gifts, decor, fashion..." />
-                    <button>🔍</button>
+                    <button>Search</button>
                 </div>
-                <nav className="top-menu">
-                    <a href="/register">Sign Up</a>
-                    <a href="/login">Sign In</a>
-                    <a href="#">Cart 🛒</a>
+                <nav className="top-menu user-actions">
+                    <a href="/register" className="action-link"><i className="fas fa-user-plus"></i></a>
+                    <a href="/login" className="action-link"><i className="fas fa-user"></i></a>
+                    <a href="#" className="action-link cart-icon">
+                        <i className="fas fa-shopping-cart"></i>
+                    </a>
                 </nav>
                 </div>
                 <div className="main-nav container">

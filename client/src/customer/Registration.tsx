@@ -36,7 +36,7 @@ const Registration=()=>{
 
     const submitReg=(e)=>{
         e.preventDefault(); 
-        axios.post('http://localhost:4000/customer/register',customer_info)
+        axios.post('http://localhost:4000/mart/register',customer_info)
         .then((res)=>{
             console.log(res)
             if(res?.success) {
@@ -54,7 +54,7 @@ const Registration=()=>{
         <>
                 <div className="registration-container">
                     <div className="register-box">
-                    <h2>🌸 Create an Account</h2>
+                    <h2> CREATE AN ACCOUNT</h2>
                     <form action="#" onSubmit={submitReg} method="POST">
 
                         <div className="input-group" >
