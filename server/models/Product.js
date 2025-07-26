@@ -15,12 +15,19 @@ const productSchema = mongoose.Schema({
     unique: true,
   },
   availableDate: {
-    type: Date,
-    required: true,
+    type: Date
   },
   attributes: {
-    type: Array, 
-     required: true,
+    type: Array
+  },
+  image: {
+    type: String
+  },
+  price: {
+    type: Number
+  },
+  category: {
+    type: Array
   }
 }, {
   timestamps: true
