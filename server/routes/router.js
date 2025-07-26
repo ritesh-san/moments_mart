@@ -1,6 +1,8 @@
 const express = require('express');
 const Customer = require('../controller/Custmcontroller');
-const Product =require('../controller/Productcontroller')
+const Product =require('../controller/Productcontroller');
+const Categoryinfo = require('../controller/Categorycontroller');
+const upload = require('../config/upload');
 const router = express.Router();
 
 
@@ -21,8 +23,9 @@ router.get("/proinfo",Product.getAll);
 
 router.get("/proinfo/:id", Product.getById);
 
+router.get("/prolist/:catid", Product.getByCatId);
 
-router.post("/create", Product.create);
+router.post("/create", upload.single('image'), Product.create);
 
 
 router.put("/update/:id", Product.update);
@@ -30,6 +33,11 @@ router.put("/update/:id", Product.update);
 
 router.delete("/delete/:id", Product.delete);
 
+router.post("/category", Categoryinfo.add);
+
+router.get("/categories", Categoryinfo.info);
+
+router.get("/category/:id", Categoryinfo.infobyid);
 
 module.exports = router;
 

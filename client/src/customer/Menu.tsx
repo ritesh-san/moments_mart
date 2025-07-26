@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link,NavLink } from "react-router-dom";
 
 const Menu=()=>{
 
@@ -19,17 +19,17 @@ const Menu=()=>{
             <aside className="sidebar">
                 <h2>My Account</h2>
                 <ul className="sidebar-menu">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Change Password</a></li>
-                    <li><a href="#">Orders</a></li>
-                    <li><a href="#">Address Book</a></li>
+                    <li><NavLink to="/account" key="account" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Profile</NavLink></li>
+                    <li><NavLink to="/password" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Change Password</NavLink></li>
+                    <li><NavLink to="/orders" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Orders</NavLink></li>
+                    <li><NavLink to="/address" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Address Book</NavLink></li>
                     {
                         (customer.type == 'vendor') ? 
 
-                        <li><a href="/product/upload">Upload Products</a></li> : null
+                        <li><NavLink to="/product/upload" key="upload" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Upload Products</NavLink></li> : null
                     }
                     
-                    <li><a href="#" onClick={logout}>Logout</a></li>
+                    <li><NavLink to="#;" onClick={logout} key="logout" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Logout</NavLink></li>
                 </ul>
                 </aside>
         </>

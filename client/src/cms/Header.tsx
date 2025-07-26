@@ -1,6 +1,28 @@
-import React from "react";
+import React, {useState, useEffect, useRef } from "react";
+import axios from "axios";
+import {Link,NavLink} from "react-router-dom";
 
 const Header=()=>{
+    const[menu, setMenu] = useState<any>();
+    const refMenu = useRef(null);
+ 
+    useEffect(()=>{
+        axios.get('http://localhost:4000/mart/categories')
+        .then((res)=>{
+            console.log(res)
+            if(res?.data?.success) {
+                setMenu(res?.data?.data);
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    },[])
+
+    const toggleNav=()=>{
+            refMenu.current.classList.toggle("show");   
+    }
+
     return(
         <>
              <header className="site-header">
@@ -18,14 +40,19 @@ const Header=()=>{
                     </a>
                 </nav>
                 </div>
-                <div className="main-nav container">
-                    <a href="#">Home</a>
-                    <a href="#">Diwali</a>
-                    <a href="#">Gifts</a>
-                    <a href="#">Decor</a>
-                    <a href="#">Ethnic Wear</a>
-                    <a href="#">Vendors</a>
-                    <a href="#">Blog</a>
+                <button className="nav-toggle" onClick={toggleNav}>☰ Categories</button>
+                <div className="main-nav-wrapper" ref={refMenu}>
+                    <div className="main-nav container">
+                        <NavLink to="/" key="home" style={({isActive})=>({color:isActive?'#fff':'#1E1E2E',backgroundColor:isActive?'#DC143C':'#FFD93D'})}>Home</NavLink>
+                        {
+                            (menu && menu.length > 0) ?
+                                (
+                                    menu.map((category:any)=>{
+                                        return <NavLink to={`/category/${category._id}`} key={category._id} style={({isActive})=>({color:isActive?'#fff':'#1E1E2E',backgroundColor:isActive?'#DC143C':'#FFD93D'})}>{category.name}</NavLink>
+                                    })
+                                ):null
+                        }
+                    </div>
                 </div>
             </header>
         </>

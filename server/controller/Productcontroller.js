@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Category = require('../models/Category')
 
 const Productcontroller = {
 
@@ -30,8 +31,22 @@ const Productcontroller = {
 
   create: async (req, res) => {
     try {
+      const url = req.protocol + '://' + req.get('host')
+      const category = req.body.category;
+      delete req.body.category; 
+      req.body.category = [];
+      req.body.category[0] = category;
       const newProduct = new Product(req.body);
+      const image =  url + '/public/' + req.file.filename;
+      newProduct.image = image;
       const savedProduct = await newProduct.save();
+
+      const currentCat = await Category.findById(category);
+
+      if (currentCat) {
+        currentCat.products.push(newProduct._id); // OR use [...currentCat.products, productId]
+        await currentCat.save();
+      }
       res.status(201).json({ data: savedProduct });
     } catch (err) {
       console.error(err);
@@ -70,6 +85,19 @@ const Productcontroller = {
       res.status(500).json({ message: 'Delete failed' });
     }
   },
+
+  getByCatId: async (req, res) =>{
+    try {
+      const product = await Product.find({ category: { $in: [req.params.catid] } });
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+      res.status(200).json({ data: product, success: true  });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
 
 };
 
