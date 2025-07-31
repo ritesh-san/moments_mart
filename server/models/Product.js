@@ -28,6 +28,11 @@ const productSchema = mongoose.Schema({
   },
   category: {
     type: Array
+  },
+   vendorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'customer',  
+    required: true,
   }
 }, {
   timestamps: true

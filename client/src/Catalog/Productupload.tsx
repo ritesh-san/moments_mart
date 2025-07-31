@@ -1,7 +1,7 @@
-import Reac, {useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Menu from "../customer/Menu";
 import axios from "axios";
-import type React from "react";
+
 
 const Productupload=()=>{
     const[category, setCategory] = useState<any>();
@@ -30,6 +30,12 @@ const Productupload=()=>{
 
     const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+      const customer = JSON.parse(sessionStorage.getItem("customer") || "{}");
+    if (!customer._id) {
+      alert("Vendor ID not found. Please login again.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append('image', image); // file input name must match multer field
     formData.append('productName', productName);
@@ -37,6 +43,7 @@ const Productupload=()=>{
     formData.append('productSKU', productSKU);
     formData.append('category', selectcat);
     formData.append('price', price);
+    formData.append("vendorId", customer._id);
 
     try {
       const res = await axios.post('http://localhost:4000/mart/create', formData, {
@@ -47,6 +54,12 @@ const Productupload=()=>{
       console.log('Uploaded:', res.data);
 
       ref1.current.innerHTML = `Product insert successfully`
+      setProductName("");
+      setDescription("");
+      setProductSKU("");
+      setPrice(0);
+      setSelectcat("");
+      setImage(null);
     } catch (err) {
       console.error(err);
     }

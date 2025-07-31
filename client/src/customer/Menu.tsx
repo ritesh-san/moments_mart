@@ -24,9 +24,12 @@ const Menu=()=>{
                     <li><NavLink to="/orders" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Orders</NavLink></li>
                     <li><NavLink to="/address" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Address Book</NavLink></li>
                     {
-                        (customer.type == 'vendor') ? 
-
-                        <li><NavLink to="/product/upload" key="upload" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Upload Products</NavLink></li> : null
+                        customer?.type === 'vendor' ? (
+                        <>
+                            {/* <li><NavLink to="/product/upload" key="upload" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Upload Product</NavLink></li> */}
+                            <li><NavLink to="/product/list" key="list" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Products</NavLink></li>
+                        </>
+                    ) : null
                     }
                     
                     <li><NavLink to="#;" onClick={logout} key="logout" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Logout</NavLink></li>
