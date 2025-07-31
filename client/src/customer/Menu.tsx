@@ -10,6 +10,7 @@ const Menu=()=>{
     const logout=()=>{
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('customer')
+        sessionStorage.removeItem('cart')
 
         nav('/')
     }
@@ -32,7 +33,7 @@ const Menu=()=>{
                     ) : null
                     }
                     
-                    <li><NavLink to="#;" onClick={logout} key="logout" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Logout</NavLink></li>
+                    <li><a href="#" onClick={logout} >Logout</a></li>
                 </ul>
                 </aside>
         </>

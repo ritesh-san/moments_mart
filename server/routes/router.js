@@ -2,7 +2,9 @@ const express = require('express');
 const Customer = require('../controller/Custmcontroller');
 const Product =require('../controller/Productcontroller');
 const Categoryinfo = require('../controller/Categorycontroller');
+const Cart = require('../controller/Cartcontroller');
 const upload = require('../config/upload');
+const order = require('../controller/Ordercontroller');
 const router = express.Router();
 
 
@@ -38,6 +40,15 @@ router.post("/category", Categoryinfo.add);
 router.get("/categories", Categoryinfo.info);
 
 router.get("/category/:id", Categoryinfo.infobyid);
+
+//Cart
+router.post("/cart/:custid", Cart.addcart);
+
+router.put("/cartadditem", Cart.additem);
+
+router.post("/order", order.addOrder);
+
+router.get("/order/:id", order.getOrder);
 
 module.exports = router;
 

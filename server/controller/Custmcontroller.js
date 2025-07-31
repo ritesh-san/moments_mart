@@ -20,7 +20,7 @@ class Customcontroller{
    static registration=async (req,res)=>{
       try 
       {
-          const {type, name, email, phone, password, street, city, country, postcode, companyName, idNo, businessType} = req.body;
+          const {type, name, email, phone, password, street, city, state, country, postcode, companyName, idNo, businessType} = req.body;
 
           const checkEmail=await Customer.findOne({email:email});
 
@@ -34,7 +34,20 @@ class Customcontroller{
           let salt = bcryptjs.genSaltSync(10);
           let enycpwd = bcryptjs.hashSync(password, salt);
 
-          let customer = new Customer({type: type, name:name, password:enycpwd, email:email, phone:phone, address: `${street}, ${city}, ${country}, Zip - ${postcode}`});
+          let customer = new Customer({
+                  type: type, 
+                  name:name, 
+                  password:enycpwd, 
+                  email:email, 
+                  phone:phone, 
+                  address: [{
+                          street: street,
+                          city: city,
+                          state: state,
+                          country: country,
+                          postcode: postcode
+                        }]
+                    });
           if(type == 'vendor') {
             customer.companyName = companyName;
             customer.idNo = idNo;
