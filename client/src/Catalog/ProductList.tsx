@@ -132,9 +132,9 @@ const ProductList: React.FC = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="product-list-container">
       {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
+      <div className="list-header">
         <h2>My Products</h2>
         <button
           className="btn btn-success"
@@ -148,7 +148,7 @@ const ProductList: React.FC = () => {
         <p className="text-center">Loading...</p>
       ) : products.length > 0 ? (
         <div className="table-responsive">
-          <table className="table table-bordered table-hover text-center align-middle">
+          <table className="table table-bordered table-hover text-center align-middle product-table">
             <thead className="table-dark">
               <tr>
                 <th>Image</th>
@@ -175,15 +175,15 @@ const ProductList: React.FC = () => {
                   <td>{prod.productSKU}</td>
                   <td>{prod.description}</td>
                   <td>₹{prod.price}</td>
-                  <td>
+                  <td className="actions">
                     <button
-                      className="btn btn-sm btn-primary me-2"
+                      className="btn btn-sm btn-primary me-2 edit-btn"
                       onClick={() => openEditModal(prod)}
                     >
                       <FaEdit />
                     </button>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-danger delete-btn"
                       onClick={() => deleteProduct(prod._id)}
                     >
                       <FaTrash />
