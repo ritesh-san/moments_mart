@@ -9,6 +9,7 @@ import Dashboard from "../customer/Dashboard";
 import Productupload from "../Catalog/Productupload";
 import Product from "../Catalog/Product";
 import CategoryDetails from "../Catalog/Category";
+import ProductList from "../Catalog/ProductList";
 
 const Rule=()=>{
     return(
@@ -24,6 +25,7 @@ const Rule=()=>{
                     </Route>
                     <Route path="/product" element={<Product/>}>
                         <Route path="upload" element={<Productupload/>} />
+                          <Route path="list" element={<ProductList />} />
                     </Route>
                     <Route path="/category/:id" element={<CategoryDetails/>} />
                 </Routes>
