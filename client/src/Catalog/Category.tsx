@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +11,8 @@ const CategoryDetails = () =>{
 
     const [category, setCategory] = useState<any>();
     const [products, setProducts] = useState<any>();
+
+    const nav=useNavigate();
 
     useEffect(()=>{
         //const { id } = useParams();
