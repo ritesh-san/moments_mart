@@ -3,9 +3,9 @@ import React from "react";
 const Footer=()=>{
     return(
         <>
-           <footer class="footer">
-  <div class="footer-container">
-    <div class="footer-column">
+           <footer className="footer">
+  <div className="footer-container">
+    <div className="footer-column">
       <h4>Explore</h4>
       <ul>
         <li>Shop</li>
@@ -15,7 +15,7 @@ const Footer=()=>{
       </ul>
     </div>
 
-    <div class="footer-column">
+    <div className="footer-column">
       <h4>Follow Us</h4>
       <ul>
         <li>Instagram</li>
@@ -24,7 +24,7 @@ const Footer=()=>{
       </ul>
     </div>
 
-    <div class="footer-column">
+    <div className="footer-column">
       <h4>Support</h4>
       <ul>
         <li>Help Center</li>
@@ -33,10 +33,10 @@ const Footer=()=>{
       </ul>
     </div>
 
-    <div class="footer-column center">
+    <div className="footer-column center">
       <h3>Subscribe to Festy India</h3>
       <p>Get latest festival picks, deals & vendor updates.</p>
-      <div class="subscribe-form">
+      <div className="subscribe-form">
         <input type="email" placeholder="Enter your email" />
         <button>Subscribe</button>
       </div>
@@ -45,7 +45,7 @@ const Footer=()=>{
 
     
   </div>
-  <div class="footer-bottom">
+  <div className="footer-bottom">
     © 2025 Festy India. All Rights Reserved.
   </div>
 </footer>

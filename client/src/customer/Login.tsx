@@ -31,7 +31,18 @@ const Login=()=>{
             if(res?.data.success) {
                 sessionStorage.setItem('token', res.data.token)
                 sessionStorage.setItem('customer', JSON.stringify(res.data.data))
-                nav('/account')
+                axios.post('http://localhost:4000/mart/cart/'+ res.data?.data?._id)
+                .then((res)=>{
+                    console.log(res)
+                    if(res?.data.success) {
+                        sessionStorage.setItem('cart', JSON.stringify(res.data.data))
+                        nav('/account')
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+                
             }
         })
         .catch((err)=>{

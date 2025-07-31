@@ -17,6 +17,10 @@ const Registration=()=>{
 
     const[accout_type, setAccountType] = useState<String>("");
     const[customer_info, setCustomerInfo] = useState<customer>();
+    // const[street, setStreet] = useState<String>();
+    // const[city, setCity] = useState<String>();
+    // const[country, setCountry] = useState<String>();
+    // const[postcode, setPostcode] = useState<String>();
 
     const ref1 = useRef(null);
 
@@ -26,16 +30,24 @@ const Registration=()=>{
     }
 
     const valupd=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        if(e.target?.name == 'street' || e.target?.name == 'city' || e.target?.name == 'country' || e.target?.name == 'postcode') {
+        // if(e.target?.name == 'street'){
+        //     setStreet(e.target?.value)
+        //     setCustomerInfo({...customer_info,[e.target?.name]:e.target?.value})
+        // } else if(e.target?.name == 'city'){
+        //     setCity(e.target?.value)
+        // } else if(e.target?.name == 'country'){
+        //     setCountry(e.target?.value)
+        // }else if(e.target?.name == 'postcode') {
             
-            setCustomerInfo({...customer_info,['address']:(customer_info['address']+', '+e.target?.value)})
-        } else {
+        //     setPostcode(e.target?.value)
+        // } else {
             setCustomerInfo({...customer_info,[e.target?.name]:e.target?.value})
-        }
+        //}
     }
 
-    const submitReg=(e)=>{
+    const submitReg=(e:React.ChangeEvent<HTMLFormElement>)=>{
         e.preventDefault(); 
+        
         axios.post('http://localhost:4000/mart/register',customer_info)
         .then((res)=>{
             console.log(res)
@@ -102,6 +114,11 @@ const Registration=()=>{
                         </div>
 
                         <div className="input-group">
+                            <label>State</label>
+                            <input type="text" id="state" name="state" placeholder="State" onChange={valupd} required />
+                        </div>
+
+                        <div className="input-group">
                             <label>Country</label>
                             <input type="text" id="country" name="country" placeholder="Country" onChange={valupd} required />
                         </div>
@@ -133,7 +150,7 @@ const Registration=()=>{
                             <button type="submit">Register</button>
                         </div>
                         <div ref={ref1}></div>
-                        <p className="login-link">Already have an account? <a href="#">Login here</a></p>
+                        <p className="login-link">Already have an account? <a href="/login">Login here</a></p>
                     </form>
                     </div>
                 </div>

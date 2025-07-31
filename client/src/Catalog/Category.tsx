@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CategoryDetails = () =>{
 
@@ -36,8 +38,43 @@ const CategoryDetails = () =>{
 
     },[location])
 
+    const addtocart = (e:React.ChangeEvent<HTMLButtonElement>)=>{
+        const customer = JSON.parse(sessionStorage.getItem('customer'));
+        const id = e.target.value;
+
+        if(!customer) {
+            nav('/login');
+        } else {
+            axios.post('http://localhost:4000/mart/cart/'+ customer?._id)
+            .then((res)=>{
+                console.log(res)
+                if(res?.data.success) {
+                    axios.put('http://localhost:4000/mart/cartadditem',{cartid: res?.data?.data._id, proid: id, qty: 1 })
+                    .then((res)=>{
+                        console.log(res)
+                        sessionStorage.setItem('cart', JSON.stringify(res?.data.data))
+                        const product = products.find((item:any)=>{
+                            return (item._id == id) ? item : null;
+                        })
+                        toast.success(`${product.productName} added to cart!`);
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                        toast.error("Something went wrong!");
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+                toast.error("Something went wrong!");
+            })
+        }
+        
+    }
+
     return(
         <>
+            <ToastContainer position="top-right" autoClose={3000} />
             <div className="category-container">
                 <h2 className="title">{category?.name}</h2>
                 {
@@ -49,10 +86,10 @@ const CategoryDetails = () =>{
                                 
                                 products.map((product)=>{
                                     return <div className="product-card">
-                                                <img src={product.image} alt={product.productName} />
-                                                <h4 className="product-title">{product.productName}</h4>
+                                                <a href={`/item/${product._id}`}><img src={product.image} alt={product.productName} /></a>
+                                                <a href={`/item/${product._id}`}><h4 className="product-title">{product.productName}</h4></a>
                                                 <p className="price">${product.price}</p>
-                                                <button className="btn">Buy Now</button>
+                                                <button className="btn" value={product._id} onClick={addtocart}>Buy Now</button>
                                             </div>
                                 })
                             }

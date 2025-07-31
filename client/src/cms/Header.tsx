@@ -35,7 +35,7 @@ const Header=()=>{
                 <nav className="top-menu user-actions">
                     <a href="/register" className="action-link"><i className="fas fa-user-plus"></i></a>
                     <a href="/login" className="action-link"><i className="fas fa-user"></i></a>
-                    <a href="#" className="action-link cart-icon">
+                    <a href="/cart" className="action-link cart-icon">
                         <i className="fas fa-shopping-cart"></i>
                     </a>
                 </nav>
