@@ -95,5 +95,85 @@ class Customcontroller{
         console.log(err);
       }
    }
+
+   static addresslist= async (req, res)=>{
+      const {customerid} = req.params;
+
+      let customerdata = await Customer.findById(customerid);
+
+      if(customerdata?.address.length > 0)
+        {
+            
+            res.status(200).json({success: true, data: customerdata?.address});
+           
+        }
+        else{
+            res.status(400).json({msg:'Recorde Not found', success: false});
+        }
+   }
+
+   static getAddress= async (req, res)=>{
+      const {customerid, addressid} = req.body;
+
+      let customerdata = await Customer.findById(customerid);
+
+      if(customerdata?.address.length > 0)
+        {
+            let address = customerdata.find((val,index)=>{
+                return index == addressid;
+            })
+            res.status(200).json({success: true, data: address});
+           
+        }
+        else{
+            res.status(400).json({msg:'Recorde Not found', success: false});
+        }
+   }
+
+   static addressUpdate= async (req, res)=>{
+    console.log(req.body)
+      const {street, city, state, country, postcode, customerid, addressid} = req.body;
+
+      let customerdata = await Customer.findById(customerid);
+
+      if(customerdata)
+        {
+            if(addressid != '')  {
+              customerdata?.address.map((val,aid)=>{
+                  if(aid == addressid) {
+                    customerdata.address[aid] = {
+                      street: street,
+                      city: city,
+                      state: state,
+                      country: country,
+                      postcode: postcode
+                    }
+                  }
+              })
+            } else {
+              customerdata.address[parseInt(customerdata?.address.length > 0 ? customerdata?.address.length : 0)] = {
+                      street: street,
+                      city: city,
+                      state: state,
+                      country: country,
+                      postcode: postcode
+                    }
+            }
+
+            const updatedAddress = await Customer.findByIdAndUpdate(
+              customerid,
+              customerdata,
+              { new: true, runValidators: true }
+            );
+            if (!updatedAddress) {
+              return res.status(404).json({ message: 'address not add/update' });
+            }
+            res.status(200).json({success: true, data: updatedAddress});
+           
+        }
+        else{
+            res.status(400).json({msg:'Recorde Not found', success: false});
+        }
+   }
 }
 module.exports=Customcontroller;

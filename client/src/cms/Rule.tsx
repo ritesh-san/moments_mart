@@ -15,6 +15,8 @@ import Cart from "../Checkout/Cart";
 import Payment from "../Checkout/Payment";
 import Success from "../Checkout/Success";
 import Order from "../Order/Orderdetails";
+import Address from "../customer/Address";
+import AddressEdit from "../customer/AddressEdit";
 
 const Rule=()=>{
     return(
@@ -26,7 +28,8 @@ const Rule=()=>{
                     <Route path="/register" element={<Registration/>} />
                     <Route path="/login" element={<Login/>} />
                     <Route path="/account" element={<Dashboard/>}>
-                     
+                        <Route path="address" element={<Address/>} />
+                        <Route path="editaddress" element={<AddressEdit />} />
                     </Route>
                     <Route path="/product" element={<Product/>}>
                         <Route path="upload" element={<Productupload/>} />

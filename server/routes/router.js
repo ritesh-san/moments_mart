@@ -18,6 +18,10 @@ router.post("/register",Customer.registration);
 
 router.post("/login",Customer.login);
 
+router.post("/address/", Customer.addressUpdate);
+
+router.get("/address/:customerid", Customer.addresslist);
+
 //Product
 
 router.get("/proinfo",Product.getAll);
