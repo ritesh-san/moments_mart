@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Order=({ orderdetails }: { orderdetails?: any })=>{
+
+    const navigate = useNavigate();
 
      if (!orderdetails) {
         return <p>Loading order details...</p>;
@@ -9,6 +12,7 @@ const Order=({ orderdetails }: { orderdetails?: any })=>{
     return(
         <>
             <div className="order-page">
+                <button style={{ float: 'right' }} onClick={()=> {navigate(0)}}>Back</button>
                 <div className="order-header">
                 <h1>Order {orderdetails.order_number}</h1>
                 <p>Placed on: {orderdetails.createdAt}</p>
@@ -26,17 +30,17 @@ const Order=({ orderdetails }: { orderdetails?: any })=>{
                 
                 <div className="order-card">
                     <h2>Shipping Address</h2>
-                    <p>{orderdetails.shipping_address.street}</p>
-                    <p>{orderdetails.shipping_address.city}, {orderdetails.shipping_address.state}</p>
-                    <p>{orderdetails.shipping_address.country} - {orderdetails.shipping_address.postcode}</p>
+                    <p>{orderdetails?.shipping_address?.street}</p>
+                    <p>{orderdetails?.shipping_address?.city}, {orderdetails?.shipping_address?.state}</p>
+                    <p>{orderdetails?.shipping_address?.country} - {orderdetails?.shipping_address?.postcode}</p>
                 </div>
 
                
                 <div className="order-card">
                     <h2>Billing Address</h2>
-                    <p>{orderdetails.billing_address.street}</p>
-                    <p>{orderdetails.billing_address.city}, {orderdetails.billing_address.state}</p>
-                    <p>{orderdetails.billing_address.country} - {orderdetails.billing_address.postcode}</p>
+                    <p>{orderdetails?.billing_address?.street}</p>
+                    <p>{orderdetails?.billing_address?.city}, {orderdetails?.billing_address?.state}</p>
+                    <p>{orderdetails?.billing_address?.country} - {orderdetails?.billing_address?.postcode}</p>
                 </div>
 
                 
@@ -51,9 +55,9 @@ const Order=({ orderdetails }: { orderdetails?: any })=>{
                 <div className="items-section">
                 <h2>Items</h2>
                 {
-                    orderdetails.items.map((item)=>{
+                    orderdetails?.items?.map((item)=>{
                         return <div className="item-row">
-                                <img src={item.image} alt="{item.name}" />
+                                <img src={item.image} alt={item.name} />
                                 <div className="details">
                                 <h3>{item.name}</h3>
                                 <p>SKU: {item.sku}</p>

@@ -546,6 +546,7 @@ img {
 .product-upload-container input[type="text"],
 .product-upload-container input[type="number"],
 .product-upload-container input[type="file"],
+.product-upload-container input[type="password"],
 .product-upload-container textarea,
 .product-upload-container select {
     padding: 10px;
@@ -898,7 +899,13 @@ img {
   max-width: 1000px;
   margin: auto;
   padding: 20px;
+  min-height: 500px;
 }
+.cart-container p {
+  font-size: 30px;
+  margin-top: 50px;
+}
+
 
 .cart-container h2 {
   text-align: center;
@@ -1445,3 +1452,67 @@ img {
   width: 37%;
   float: left;
 }
+
+/* Search Area */
+.search-container {
+  position: relative;
+  width: 300px;
+  /* margin: 20px auto; */
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.search-container input:focus {
+  border-color: #007bff;
+}
+
+.suggestion-list {
+  position: absolute;
+  top: 42px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background: white;
+  max-height: 224px;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 0 0 5px 5px;
+}
+
+.suggestion-list li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.suggestion-list li:hover {
+  background: #f0f0f0;
+}
+
+.suggestion-list img {
+  width: 18%;
+  float: left;
+}
+
+.suggestion-list .left-span {
+  float: left;
+    margin-left: 15px;
+}
+
+.suggestion-list .sbottom {
+  display: block;
+  text-align: left;
+}
+
+.suggestion-list .li-item  {
+  height: 53px;
+ }
+
+/* Change Password */

@@ -1,6 +1,8 @@
 import React,{useState, useRef, useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface customer{
     email:string,
@@ -20,6 +22,11 @@ const Login=()=>{
     useEffect(()=>{
         if(sessionStorage.getItem('token')){
             nav('/account')
+        }
+        const msg = sessionStorage.getItem("msg");
+        if (msg) {
+        toast.success(msg);
+        sessionStorage.removeItem("msg");
         }
     }, [nav])
 
@@ -47,11 +54,13 @@ const Login=()=>{
         })
         .catch((err)=>{
             console.log(err)
+            toast.error(err.response.data.msg);
         })
     }
 
     return(
         <>
+        <ToastContainer position="top-right" autoClose={3000} />
                 <div className="registration-container">
                     <div className="register-box">
                     <h2> LOGIN ACCOUNT</h2>

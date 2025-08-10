@@ -21,9 +21,9 @@ const Menu=()=>{
                 <h2>My Account</h2>
                 <ul className="sidebar-menu">
                     <li><NavLink to="/account" key="account" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Profile</NavLink></li>
-                    <li><NavLink to="/password" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Change Password</NavLink></li>
-                    <li><NavLink to="/orders" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Orders</NavLink></li>
-                    <li><NavLink to="/address" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Address Book</NavLink></li>
+                    <li><NavLink to="/account/changepass" key="password" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Change Password</NavLink></li>
+                    <li><NavLink to="/account/orders" key="orders" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Orders</NavLink></li>
+                    <li><NavLink to="/account/address" key="address" style={({isActive})=>({color:isActive?'#FFD93D':'#fff'})}>Address Book</NavLink></li>
                     {
                         customer?.type === 'vendor' ? (
                         <>
