@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, BrowserRouter, Routes, Route} from "react-router-dom";
+import {Link, BrowserRouter, Routes, Route, useParams} from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
 import Footer from "./Footer";
@@ -17,6 +17,9 @@ import Success from "../Checkout/Success";
 import Order from "../Order/Orderdetails";
 import Address from "../customer/Address";
 import AddressEdit from "../customer/AddressEdit";
+import Orderlist from "../Order/Orderlist";
+import ProductDetailsWrapper from "../Catalog/ProductDetailsWrapper";
+import ChangePassword from "../customer/ChangePassword";
 
 const Rule=()=>{
     return(
@@ -30,17 +33,21 @@ const Rule=()=>{
                     <Route path="/account" element={<Dashboard/>}>
                         <Route path="address" element={<Address/>} />
                         <Route path="editaddress" element={<AddressEdit />} />
+                        <Route path="editaddress/:id" element={<AddressEdit />} />
+                        <Route path="orders" element={<Orderlist/>} />
+                        <Route path="changepass" element={<ChangePassword/>} />
                     </Route>
                     <Route path="/product" element={<Product/>}>
                         <Route path="upload" element={<Productupload/>} />
-                          <Route path="list" element={<ProductList />} />
+                        <Route path="list" element={<ProductList />} />
                     </Route>
                     <Route path="/category/:id" element={<CategoryDetails/>} />
-                    <Route path="/item/:id" element={<ProductsDeatils/>} />
+                    <Route path="/item/:id" element={<ProductDetailsWrapper />} />
                     <Route path="/cart" element={<Cart/>} />
                     <Route path="/checkout" element={<Payment/>} />
                     <Route path="/success" element={<Success/>} />
                     <Route path="/order" element={<Order/>} />
+                    
                 </Routes>
                 <Footer/>
             </BrowserRouter>

@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddressEdit=()=>{
 
@@ -12,7 +12,29 @@ const AddressEdit=()=>{
     const[country, setCountry] = useState<string>('')
     const[postcode, setPostcode] = useState<string>('')
 
+    const[address, setAddress] = useState<string>('')
+
+    const {id} = useParams();
+
     const nav = useNavigate();
+
+    useEffect(()=>{
+        let customer = JSON.parse(sessionStorage.getItem('customer'))
+        axios.get(`http://localhost:4000/mart/address/${customer._id}/${id}`)
+        .then((res)=>{
+            console.log(res.data.data)
+            let addressnew = res.data.data
+            setAddress(addressnew)
+            setStreet(addressnew?.street || "")
+            setCity(addressnew?.city  || "")
+            setState(addressnew?.state || "")
+            setCountry(addressnew?.country || "")
+            setPostcode(addressnew?.postcode || "")
+        }).catch((err)=>{
+            console.log(err)
+            toast.error("Something went wrong!");
+        })
+    },[])
 
     const handleSubmit=async (e:React.ChangeEvent<HTMLFormElement>)=>{
         e.preventDefault();
@@ -30,7 +52,7 @@ const AddressEdit=()=>{
         country: country,
         postcode: postcode,
         customerid: customer._id,
-        addressid: ''
+        addressid: id? id:''
        }
 
         try {
@@ -60,21 +82,19 @@ const AddressEdit=()=>{
                         
 
                         <label>Street</label>
-                        <input type="text" name="street" onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setStreet(e.target.value)} placeholder="Enter Street" required/>
+                        <input type="text" name="street" value={street} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setStreet(e.target.value)} placeholder="Enter Street" required/>
 
                         <label>City</label>
-                        <input type="text" name="city" onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setCity(e.target.value)} placeholder="Enter City" required/>
+                        <input type="text" name="city" value={city} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setCity(e.target.value)} placeholder="Enter City" required/>
 
                         <label>State</label>
-                        <input type="text" name="state" onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setState(e.target.value)} placeholder="Enter State" required/>
+                        <input type="text" name="state" value={state} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setState(e.target.value)} placeholder="Enter State" required/>
 
                         <label>Country</label>
-                        <input type="text" name="country" onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setCountry(e.target.value)} placeholder="Enter Country"  required/>
-
-                        
+                        <input type="text" name="country" value={country} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setCountry(e.target.value)} placeholder="Enter Country"  required/>
 
                         <label>Postcode</label>
-                        <input type="text" name="postcode" onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setPostcode(e.target.value)} placeholder="Enter Postcode" required/>
+                        <input type="text" name="postcode" value={postcode} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setPostcode(e.target.value)} placeholder="Enter Postcode" required/>
 
                         <button type="submit">Save</button>
                     </form>

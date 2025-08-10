@@ -32,6 +32,11 @@ const Order = {
         const result = await OrderModel.findById(req.params.id)
 
         res.status(200).json({ data: result, success: true });
+    },
+    getOrders: async (req, res)=>{
+        const result = await OrderModel.find({customer_id:req.params.customerid})
+
+        res.status(200).json({ data: result, success: true });
     }
 }
 

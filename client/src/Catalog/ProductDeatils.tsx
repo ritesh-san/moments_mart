@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { updatecart } from "../reducers/redusers";
+import { useDispatch } from "react-redux";
 
 const ProductsDeatils = ()=>{
     const [product, setProduct] = useState<any>()
@@ -10,6 +12,7 @@ const ProductsDeatils = ()=>{
     const { id } = useParams();
 
     const nav=useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         axios.get('http://localhost:4000/mart/proinfo/'+id)
@@ -40,6 +43,15 @@ const ProductsDeatils = ()=>{
                     axios.put('http://localhost:4000/mart/cartadditem',{cartid: res?.data?.data._id, proid: id, qty: qty })
                     .then((res)=>{
                         console.log(res)
+                        let count 
+                        res?.data.data?.items.map(()=>{
+
+                        })
+                        dispatch(
+                            updatecart({
+                                cartItems: res?.data.data?.items,
+                            })
+                        );
                         sessionStorage.setItem('cart', JSON.stringify(res?.data.data))
                         toast.success(`${product.productName} added to cart!`);
                     })
@@ -73,7 +85,7 @@ const ProductsDeatils = ()=>{
                     {product?.description}
                 </p>
                 <div className="product-actions">
-                    <input type="number" min="1" value="1" name="qty" onChange={valup} className="product-qty" />
+                    <input type="number" min="1" value={qty} name="qty" onChange={valup} className="product-qty" />
                     <button className="add-to-cart" onClick={addtocart}>Add to Cart</button>
                 </div>
                 </div>

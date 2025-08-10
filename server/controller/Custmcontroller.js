@@ -113,13 +113,13 @@ class Customcontroller{
    }
 
    static getAddress= async (req, res)=>{
-      const {customerid, addressid} = req.body;
+      const {customerid, addressid} = req.params;
 
       let customerdata = await Customer.findById(customerid);
 
       if(customerdata?.address.length > 0)
         {
-            let address = customerdata.find((val,index)=>{
+            let address = customerdata.address.find((val,index)=>{
                 return index == addressid;
             })
             res.status(200).json({success: true, data: address});
@@ -131,7 +131,7 @@ class Customcontroller{
    }
 
    static addressUpdate= async (req, res)=>{
-    console.log(req.body)
+    //console.log(req.body)
       const {street, city, state, country, postcode, customerid, addressid} = req.body;
 
       let customerdata = await Customer.findById(customerid);
@@ -169,6 +169,65 @@ class Customcontroller{
               return res.status(404).json({ message: 'address not add/update' });
             }
             res.status(200).json({success: true, data: updatedAddress});
+           
+        }
+        else{
+            res.status(400).json({msg:'Recorde Not found', success: false});
+        }
+   }
+
+   static addressDelete= async (req, res)=>{
+      const {customerid, addressid} = req.params;
+
+      let customerdata = await Customer.findById(customerid);
+
+      if(customerdata)
+        {
+            if(addressid != '')  {
+              let newAddress = customerdata?.address.filter((val,aid)=>{
+                  return aid != addressid  
+              })
+
+              customerdata.address = newAddress
+            }
+
+            const updatedAddress = await Customer.findByIdAndUpdate(
+              customerid,
+              customerdata,
+              { new: true, runValidators: true }
+            );
+            if (!updatedAddress) {
+              return res.status(404).json({ message: 'address not deleted' });
+            }
+            res.status(200).json({success: true, data: updatedAddress});
+           
+        }
+        else{
+            res.status(400).json({msg:'Recorde Not found', success: false});
+        }
+   }
+
+   static ChangePassword = async (req, res) =>{
+        let {customerid, password} = req.body
+        let salt = bcryptjs.genSaltSync(10);
+        let enycpwd = bcryptjs.hashSync(password, salt);
+
+        let customerdata = await Customer.findById(customerid);
+
+      if(customerdata)
+        {
+            
+            customerdata.password = enycpwd
+
+            const updatedPassword = await Customer.findByIdAndUpdate(
+              customerid,
+              customerdata,
+              { new: true, runValidators: true }
+            );
+            if (!updatedPassword) {
+              return res.status(404).json({ message: 'Password not Updated' });
+            }
+            res.status(200).json({success: true, data: updatedPassword});
            
         }
         else{

@@ -74,6 +74,59 @@ const Cart = {
 
         res.status(200).json({ data: result, success: true });
     },
+    updateQty: async (req, res) => {
+        const {cartid, itemid, qty, action} = req.body
+
+        const activCart =  await CartModel.findById(cartid);
+
+        if(activCart) {
+            if(activCart?.items.length > 0) {
+
+                activCart.items.map((item, ind)=>{
+                    if(item.id == itemid) {
+                        if(action == 'plus') {
+                           activCart.items[ind].qty += qty
+                           activCart.items[ind].subtotal += qty * activCart.items[ind].price
+                            activCart.subtotal += qty * activCart.items[ind].price
+                            activCart.total += qty * activCart.items[ind].price
+                        } else {
+                             if(item.qty == 1)
+                             {
+                                let newitems = activCart.items.filter((nitem)=>{
+                                    if(nitem.id == itemid) {
+                                        activCart.subtotal -= nitem.subtotal
+                                        activCart.total -= nitem.subtotal
+                                    }
+                                    return nitem.id != itemid
+                                })
+                                activCart.items = newitems
+                             } else {
+                                activCart.items[ind].qty -= qty
+                                activCart.items[ind].subtotal -= qty * activCart.items[ind].price
+                                activCart.subtotal -= qty * activCart.items[ind].price
+                                activCart.total -= qty * activCart.items[ind].price
+                             }
+                        }
+                        
+                    }
+                    
+                })
+            }
+
+            const updatedCart = await CartModel.findByIdAndUpdate(
+              cartid,
+              activCart,
+              { new: true, runValidators: true }
+            );
+            if (!updatedCart) {
+              return res.status(404).json({ message: 'Item not deleted' });
+            }
+            res.status(200).json({success: true, data: updatedCart});
+
+        } else {
+            res.status(401).json({ msg: 'Records not found', success: false });
+        }
+    }
 }
 
 module.exports = Cart

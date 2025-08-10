@@ -18,14 +18,21 @@ router.post("/register",Customer.registration);
 
 router.post("/login",Customer.login);
 
+router.post("/changepass",Customer.ChangePassword);
+
 router.post("/address/", Customer.addressUpdate);
 
+router.get("/address/:customerid/:addressid", Customer.getAddress);
+
 router.get("/address/:customerid", Customer.addresslist);
+
+router.delete("/address/:customerid/:addressid", Customer.addressDelete);
 
 //Product
 
 router.get("/proinfo",Product.getAll);
 
+router.get("/prosearch",Product.getSearch);
 
 router.get("/proinfo/:id", Product.getById);
 
@@ -50,9 +57,13 @@ router.post("/cart/:custid", Cart.addcart);
 
 router.put("/cartadditem", Cart.additem);
 
+router.put("/cartupdateqty", Cart.updateQty);
+
 router.post("/order", order.addOrder);
 
-router.get("/order/:id", order.getOrder);
+router.get("/order/:customerid", order.getOrders);
+
+router.get("/orderinfo/:id", order.getOrder);
 
 module.exports = router;
 

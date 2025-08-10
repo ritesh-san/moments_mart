@@ -12,7 +12,7 @@ const Success = () =>{
         setOrdernum(sessionStorage.getItem('ordernum'))
         setOrderId(sessionStorage.getItem('orderid'))
 
-        axios.get('http://localhost:4000/mart/order/'+sessionStorage.getItem('orderid'))
+        axios.get('http://localhost:4000/mart/orderinfo/'+sessionStorage.getItem('orderid'))
         .then((res)=>{
             console.log(res)
             setOrder(res?.data?.data)

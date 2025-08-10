@@ -46,7 +46,7 @@ const Footer=()=>{
     
   </div>
   <div className="footer-bottom">
-    © 2025 Festy India. All Rights Reserved.
+    © 2025 Moments Mart. All Rights Reserved.
   </div>
 </footer>
         </>

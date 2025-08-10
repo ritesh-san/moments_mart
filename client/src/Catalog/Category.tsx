@@ -3,6 +3,8 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { updatecart } from "../reducers/redusers";
+import { useDispatch } from "react-redux";
 
 const CategoryDetails = () =>{
 
@@ -13,6 +15,7 @@ const CategoryDetails = () =>{
     const [products, setProducts] = useState<any>();
 
     const nav=useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         //const { id } = useParams();
@@ -54,6 +57,12 @@ const CategoryDetails = () =>{
                     axios.put('http://localhost:4000/mart/cartadditem',{cartid: res?.data?.data._id, proid: id, qty: 1 })
                     .then((res)=>{
                         console.log(res)
+                        dispatch(
+                            updatecart({
+                               // count: res?.data.data?.items?.length,
+                                cartItems: res?.data.data?.items,
+                            })
+                        );
                         sessionStorage.setItem('cart', JSON.stringify(res?.data.data))
                         const product = products.find((item:any)=>{
                             return (item._id == id) ? item : null;

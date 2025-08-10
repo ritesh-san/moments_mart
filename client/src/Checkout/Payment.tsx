@@ -10,6 +10,7 @@ const Payment=()=>{
     let [payment, setPayment] = useState<String>()
     let [selectaddress, setSelectaddress] = useState<String>()
     let [cartid, setcartId] = useState<String>()
+    let [currentaddress, setCurrentaddress] = useState<any>()
 
     const nav=useNavigate();
 
@@ -30,8 +31,16 @@ const Payment=()=>{
         setSelectaddress(e.target.value)
     }
 
+    let setCurrentAddress = (e:React.ChangeEvent<HTMLInputElement>) =>{
+        setCurrentaddress({...currentaddress, [e.target.name]: e.target.value})
+    }
+
     let placeOrder=()=>{
         cart.shipping_method = 'free'
+        if(selectaddress == 'new') {
+            selectaddress = JSON.stringify(currentaddress)
+        }
+
         cart.shipping_address = JSON.parse(selectaddress)
         cart.billing_address = JSON.parse(selectaddress)
         cart.payment_method = payment
@@ -46,6 +55,12 @@ const Payment=()=>{
         axios.post('http://localhost:4000/mart/order',cart)
         .then((res)=>{
             console.log(res)
+            if(currentaddress) {
+                currentaddress.customerid = customer._id
+                currentaddress.addressid = ''
+                const res1 = axios.post('http://localhost:4000/mart/address', currentaddress);
+            }
+            
             sessionStorage.setItem('ordernum', res?.data?.data.order_number)
             sessionStorage.setItem('orderid', res?.data?.data._id)
             sessionStorage.removeItem('cart')
@@ -67,7 +82,7 @@ const Payment=()=>{
                         <div className="address-list">
                             {
                                
-                                customer?.address?.map((add:any)=>{
+                                customer?.address?.map((add:any, ind:Number)=>{
                                     
                                     return <label className="address-card">
                                             <input type="radio" name="selectedAddress" value={JSON.stringify(add)} onClick={SelectAdd}  />
@@ -96,24 +111,24 @@ const Payment=()=>{
                     <div className="form-section">
                     <form>
                         <div className="form-group">
-                        <input type="text" placeholder="First Name" />
-                        <input type="text" placeholder="Last Name"/>
+                        {/* <input type="text" placeholder="Name"  /> */}
+                        <input type="text" name="street" placeholder="Street Address" onChange={setCurrentAddress}/>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                         <input type="text" placeholder="Street Address"/>
+                        </div> */}
+                        <div className="form-group">
+                        <input type="text" name="city" placeholder="City" onChange={setCurrentAddress} />
+                        <input type="text" name="state" placeholder="State/Province" onChange={setCurrentAddress}/>
                         </div>
                         <div className="form-group">
-                        <input type="text" placeholder="City"/>
-                        <input type="text" placeholder="State/Province"/>
+                        <input type="text" name="country" placeholder="Country" onChange={setCurrentAddress} />
+                        <input type="text" name="postcode" placeholder="Post Code" onChange={setCurrentAddress} />
                         </div>
-                        <div className="form-group">
-                        <input type="text" placeholder="Country"/>
-                        <input type="text" placeholder="Zip Code"/>
-                        </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                         <input type="tel" placeholder="Phone Number"/>
                         <input type="email" placeholder="Email" />
-                        </div>
+                        </div> */}
                     </form>
                     </div> </> : null
 

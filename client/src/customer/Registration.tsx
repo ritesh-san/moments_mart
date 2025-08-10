@@ -1,5 +1,9 @@
 import React,{useState, useRef} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface customer{
     type:string,
@@ -23,6 +27,7 @@ const Registration=()=>{
     // const[postcode, setPostcode] = useState<String>();
 
     const ref1 = useRef(null);
+    const nav=useNavigate();
 
     const checkVendor=(e:React.ChangeEvent<HTMLSelectElement>)=>{
         setAccountType(e.target.value);
@@ -30,40 +35,41 @@ const Registration=()=>{
     }
 
     const valupd=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        // if(e.target?.name == 'street'){
-        //     setStreet(e.target?.value)
-        //     setCustomerInfo({...customer_info,[e.target?.name]:e.target?.value})
-        // } else if(e.target?.name == 'city'){
-        //     setCity(e.target?.value)
-        // } else if(e.target?.name == 'country'){
-        //     setCountry(e.target?.value)
-        // }else if(e.target?.name == 'postcode') {
-            
-        //     setPostcode(e.target?.value)
-        // } else {
-            setCustomerInfo({...customer_info,[e.target?.name]:e.target?.value})
-        //}
+        
+        setCustomerInfo({...customer_info,[e.target?.name]:e.target?.value})
+        
     }
 
     const submitReg=(e:React.ChangeEvent<HTMLFormElement>)=>{
         e.preventDefault(); 
+
+        if(customer_info?.password != customer_info?.confirm_password)
+        {
+            toast.error('Password & Confirm Password are not same.');
+            return
+        }
         
         axios.post('http://localhost:4000/mart/register',customer_info)
         .then((res)=>{
-            console.log(res)
-            if(res?.success) {
-                if (ref1.current) {
-                ref1.current.innerHTML = 'Registration Successfully';
-                }
+            //console.log(res)
+            if(res?.data.success) {
+                //if (ref1.current) {
+               // ref1.current.innerHTML = 'Registration Successfully';
+                toast.success('Registration Successfully');
+                sessionStorage.setItem('msg','Registration Successfully')
+                nav('/login')
+                //}
             }
         })
         .catch((err)=>{
             console.log(err)
+            toast.error(err?.response?.data?.msg);
         })
     }
 
     return(
         <>
+        <ToastContainer position="top-right" autoClose={3000} />
                 <div className="registration-container">
                     <div className="register-box">
                     <h2> CREATE AN ACCOUNT</h2>
@@ -137,12 +143,12 @@ const Registration=()=>{
 
                             <div className="input-group">
                                 <label >ID Number</label>
-                                <input type="email" id="idNo" name="idNo" placeholder="ID Number" onChange={valupd} required />
+                                <input type="text" id="idNo" name="idNo" placeholder="ID Number" onChange={valupd} required />
                             </div>
 
                             <div className="input-group">
                                 <label >Business Type</label>
-                                <input type="tel" id="businessType" name="businessType" placeholder="Business Type" onChange={valupd} required />
+                                <input type="text" id="businessType" name="businessType" placeholder="Business Type" onChange={valupd} required />
                             </div></> : ""
 
                         }
